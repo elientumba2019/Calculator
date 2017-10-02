@@ -21,6 +21,7 @@
 
             <Button
                 android:id="@+id/btn_7"
+                style="@style/ButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -28,6 +29,7 @@
 
             <Button
                 android:id="@+id/btn_8"
+                style="@style/ButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -36,12 +38,14 @@
             <Button
                 android:id="@+id/btn_9"
                 android:layout_width="match_parent"
+                style="@style/ButtonStyle"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="9"/>
 
             <Button
                 android:id="@+id/btn_divide"
+                style="@style/ButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -57,6 +61,7 @@
                 android:id="@+id/btn_4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                style="@style/ButtonStyle"
                 android:layout_weight="1"
                 android:text="4"/>
 
@@ -64,11 +69,13 @@
                 android:id="@+id/btn_5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                style="@style/ButtonStyle"
                 android:layout_weight="1"
                 android:text="5"/>
 
             <Button
                 android:id="@+id/btn_6"
+                style="@style/ButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -76,6 +83,7 @@
 
             <Button
                 android:id="@+id/btn_multiply"
+                style="@style/ButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -89,6 +97,7 @@
 
             <Button
                 android:id="@+id/btn_1"
+                style="@style/ButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -98,12 +107,14 @@
                 android:id="@+id/btn_2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                style="@style/ButtonStyle"
                 android:layout_weight="1"
                 android:text="2"/>
 
             <Button
                 android:id="@+id/btn_3"
                 android:layout_width="match_parent"
+                style="@style/ButtonStyle"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="3"/>
@@ -111,6 +122,7 @@
             <Button
                 android:id="@+id/btn_minus"
                 android:layout_width="match_parent"
+                style="@style/ButtonStyle"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="-"/>
@@ -124,12 +136,14 @@
             <Button
                 android:id="@+id/btn_0"
                 android:layout_width="match_parent"
+                style="@style/ButtonStyle"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="0"/>
 
             <Button
                 android:id="@+id/btn_decimal"
+                style="@style/ButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -139,11 +153,13 @@
                 android:id="@+id/btn_equals"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                style="@style/ButtonStyle"
                 android:layout_weight="1"
                 android:text="="/>
 
             <Button
                 android:id="@+id/btn_plus"
+                style="@style/ButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
