@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -42,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
      * @return
      */
     private String getValue(String newValue){
-        return formatDouble(Double.parseDouble(newValue));
+        double value = Double.parseDouble(newValue);
+        return  formatDouble(value);
     }
 
 
@@ -60,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         else{
-            return String.format("%s" , d);
+            final DecimalFormat format = new DecimalFormat("0.0############");
+            return format.format(d);
         }
     }
 
@@ -71,16 +75,13 @@ public class MainActivity extends AppCompatActivity {
      * for buttons (digits
      * @param view
      */
-    @OnClick({R.id.btn_0, R.id.btn_1, R.id.btn_2,
+    @OnClick({R.id.btn_1, R.id.btn_2,
             R.id.btn_3, R.id.btn_4, R.id.btn_5,
             R.id.btn_6, R.id.btn_7, R.id.btn_8, R.id.btn_9})
     public void digitClicked(View view){
 
         switch (view.getId()){
 
-            case R.id.btn_0:
-                addDigit(0);
-                break;
             case R.id.btn_1:
                 addDigit(1);
                 break;
@@ -110,6 +111,35 @@ public class MainActivity extends AppCompatActivity {
                 break;
             default:
                 break;
+        }
+    }
+
+
+    /**
+     * actions to be taken when the decimal point is clicked on
+     */
+    @OnClick(R.id.btn_decimal)
+    public void decimalClicked(){
+
+        String value = result.getText().toString().trim();
+        if(!value.contains(".")){
+            value += ".";
+            result.setText(value);
+        }
+    }
+
+
+
+    /**
+     * Actions to be taken whenever
+     * the button 0 s clicked
+     */
+    @OnClick(R.id.btn_0)
+    public void zeroClicked(){
+        String value = result.getText().toString().trim();
+        if(!value.isEmpty() && !value.equals("0")){
+            value += "0";
+            result.setText(value);
         }
     }
 }
