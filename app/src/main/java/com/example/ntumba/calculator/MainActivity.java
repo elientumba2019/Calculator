@@ -1,6 +1,7 @@
 package com.example.ntumba.calculator;
 
 import android.annotation.SuppressLint;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,9 +33,20 @@ public class MainActivity extends AppCompatActivity {
      * @param number
      */
     private void addDigit(int number){
-        final String onScreen = result.getText().toString().trim();
+        final String onScreen = GetElemenOnScreen();
         final String newVar = getValue(onScreen + number);
         result.setText(newVar);
+    }
+
+
+    /**
+     * returns the Element
+     * on the screen
+     * @return
+     */
+    @NonNull
+    private String GetElemenOnScreen() {
+        return result.getText().toString().trim();
     }
 
 
@@ -121,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.btn_decimal)
     public void decimalClicked(){
 
-        String value = result.getText().toString().trim();
+        String value = GetElemenOnScreen();
         if(!value.contains(".")){
             value += ".";
             result.setText(value);
@@ -136,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
      */
     @OnClick(R.id.btn_0)
     public void zeroClicked(){
-        String value = result.getText().toString().trim();
+        String value = GetElemenOnScreen();
         if(!value.isEmpty() && !value.equals("0")){
             value += "0";
             result.setText(value);
