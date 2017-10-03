@@ -13,6 +13,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.example.ntumba.calculator.Formattor.formatDouble;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -96,28 +98,12 @@ public class MainActivity extends AppCompatActivity {
      */
     private String getValue(String newValue){
         final double value = Double.parseDouble(newValue);
-        return  formatDouble(value);
+        return  Formattor.formatDouble(value);
     }
 
 
 
-    /**
-     * given a double value returns a reformated
-     * String representation of the value
-     * @param d
-     * @return
-     */
-    @SuppressLint("DefaultLocale")
-    private String formatDouble(double d){
-        if(d == (long)d){
-            return String.format("%d" , (long)d);
-        }
 
-        else{
-            final DecimalFormat format = new DecimalFormat("0.0#############");
-            return format.format(d);
-        }
-    }
 
 
 
