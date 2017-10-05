@@ -1,7 +1,4 @@
 package com.example.ntumba.calculator;
-
-import android.annotation.SuppressLint;
-
 import java.text.DecimalFormat;
 public class Formattor {
 

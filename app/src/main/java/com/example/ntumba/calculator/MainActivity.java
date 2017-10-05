@@ -1,7 +1,9 @@
 package com.example.ntumba.calculator;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,14 +20,17 @@ import static com.example.ntumba.calculator.Formattor.formatDouble;
 public class MainActivity extends AppCompatActivity {
 
 
-    private double firstValue , secondValue;
+    private double baseValue , secondValue;
     private boolean resetValue;
     private int lastKey;
     private int lastOperation;
 
+
+    //state variable
     private static final int DIGIT = 0;
     private static final int EQUALS = 1;
     private static final int PLUS = 2;
+    private static final int MINUS = 3;
 
 
 
@@ -48,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void addDigit(int number){
         final String onScreen = GetElementOnScreen();
-        final String newVar = getValue(onScreen + number);
+        final String newVar = removeLeadingZero(onScreen + number);
         result.setText(newVar);
     }
 
@@ -96,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
      * @param newValue
      * @return
      */
-    private String getValue(String newValue){
+    private String removeLeadingZero(String newValue){
         final double value = Double.parseDouble(newValue);
         return  Formattor.formatDouble(value);
     }
@@ -175,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
      * Actions to be taken whenever
      * the button 0 s clicked
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @OnClick(R.id.btn_0)
     public void zeroClicked(){
         String value = GetElementOnScreen();
@@ -194,31 +200,70 @@ public class MainActivity extends AppCompatActivity {
      * used in any other operation
      */
     public void addNumbers(){
-        final double resultValue = firstValue + secondValue;
+        final double resultValue = baseValue + secondValue;
         result.setText(formatDouble(resultValue));
-        firstValue = resultValue;
+        baseValue = resultValue;
     }
 
 
+    /**
+     * substract two numbers and display the result on screen
+     */
+    public void substractNumber(){
+        final double resultValue = baseValue - secondValue;
+        result.setText(Formattor.formatDouble(resultValue));
+        baseValue = resultValue;
+    }
+
 
     /**
-     * actions to tbe performed when the plus buttom is clicked;
+     * handles the operations
+     * @param operation
      */
-    @OnClick(R.id.btn_plus)
-    public void onPlusClicked(){
-        resetValue = true;
-        lastOperation = PLUS;
+    private void handleOperation(int operation){
 
-        if(lastKey != DIGIT){
-            lastKey = PLUS;
+        if(lastKey == operation){
             return;
         }
 
 
-        secondValue = getDisplayedNumberAsDouble();
-        addNumbers();
-        lastKey = PLUS;
+
+        if(lastKey == DIGIT){
+            secondValue = getDisplayedNumberAsDouble();
+            handleEqual();
+            baseValue = getDisplayedNumberAsDouble();
+        }
+
+
+
+        resetValue = true;
+        lastKey = operation;
+        lastOperation = operation;
     }
+
+
+
+
+
+    /**
+
+     ont the layout
+     */
+    @OnClick(R.id.btn_plus)
+    public void onPlusClicked(){
+       handleOperation(PLUS);
+    }
+
+
+    /**
+     * actions to tbe taked whenever the minus button is pressed
+     * on tje layout
+     */
+    @OnClick(R.id.btn_minus)
+    public void onMinusClicked(){
+        handleOperation(MINUS);
+    }
+
 
 
     /**
@@ -252,6 +297,11 @@ public class MainActivity extends AppCompatActivity {
     private void handleEqual(){
         if(lastOperation == PLUS){
             addNumbers();
+        }
+
+
+        else if(lastOperation == MINUS){
+            substractNumber();
         }
     }
 }
