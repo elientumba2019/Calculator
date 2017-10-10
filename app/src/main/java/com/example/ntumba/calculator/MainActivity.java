@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int EQUALS = 1;
     private static final int PLUS = 2;
     private static final int MINUS = 3;
+    private static final int MULTIPLY = 4;
 
 
 
@@ -199,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
      * to be added in the futures or
      * used in any other operation
      */
-    public void addNumbers(){
+    private void addNumbers(){
         final double resultValue = baseValue + secondValue;
         result.setText(formatDouble(resultValue));
         baseValue = resultValue;
@@ -209,8 +210,19 @@ public class MainActivity extends AppCompatActivity {
     /**
      * substract two numbers and display the result on screen
      */
-    public void substractNumber(){
+    private void substractNumber(){
         final double resultValue = baseValue - secondValue;
+        result.setText(Formattor.formatDouble(resultValue));
+        baseValue = resultValue;
+    }
+
+
+    /**
+     * handles the multiplication
+     * mechanism
+     */
+    private void multiplyNumbers(){
+        final double resultValue = baseValue * secondValue;
         result.setText(Formattor.formatDouble(resultValue));
         baseValue = resultValue;
     }
@@ -266,6 +278,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    @OnClick(R.id.btn_multiply)
+    public void onMultiplyClicked(){
+        handleOperation(MULTIPLY);
+    }
+
+
+
     /**
      * actions to to be performed
      * when the equal key is clicked
@@ -295,13 +314,20 @@ public class MainActivity extends AppCompatActivity {
      * handling the equal button
      */
     private void handleEqual(){
+        //if the last operation was addition
         if(lastOperation == PLUS){
             addNumbers();
         }
 
 
+        //for substraction
         else if(lastOperation == MINUS){
             substractNumber();
+        }
+
+        //for multiplication
+        else if(lastOperation == MULTIPLY){
+            multiplyNumbers();
         }
     }
 }
