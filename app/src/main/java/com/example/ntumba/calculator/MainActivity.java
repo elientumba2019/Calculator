@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int PLUS = 2;
     private static final int MINUS = 3;
     private static final int MULTIPLY = 4;
+    private static final int DIVIDE = 5;
 
 
 
@@ -229,6 +230,22 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
+     * handles the division mechanism
+     */
+    private void divideNumber(){
+
+        double resultValue = 0;
+        if(secondValue != 0){
+            resultValue = baseValue / secondValue;
+        }
+
+
+        result.setText(Formattor.formatDouble(resultValue));
+        baseValue = resultValue;
+    }
+
+
+    /**
      * handles the operations
      * @param operation
      */
@@ -277,10 +294,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * clicked event for the multiplication
+     * button
+     */
     @OnClick(R.id.btn_multiply)
     public void onMultiplyClicked(){
         handleOperation(MULTIPLY);
+    }
+
+
+    /**
+     * click event for the  division
+     * button
+     */
+    @OnClick(R.id.btn_divide)
+    public void onDivisionClicked(){
+        handleOperation(DIVIDE);
     }
 
 
@@ -314,20 +344,24 @@ public class MainActivity extends AppCompatActivity {
      * handling the equal button
      */
     private void handleEqual(){
-        //if the last operation was addition
-        if(lastOperation == PLUS){
-            addNumbers();
-        }
 
+        switch (lastOperation){
 
-        //for substraction
-        else if(lastOperation == MINUS){
-            substractNumber();
-        }
+            case PLUS :
+                addNumbers();
+                break;
 
-        //for multiplication
-        else if(lastOperation == MULTIPLY){
-            multiplyNumbers();
+            case MINUS :
+                substractNumber();
+                break;
+
+            case MULTIPLY :
+                multiplyNumbers();
+                break;
+
+            case DIVIDE :
+                divideNumber();
+                break;
         }
     }
 }
