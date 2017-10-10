@@ -119,15 +119,21 @@ public class MainActivity extends AppCompatActivity {
      * for buttons (digits
      * @param view
      */
-    @OnClick({R.id.btn_1, R.id.btn_2,
+    @OnClick({R.id.btn_decimal ,R.id.btn_0 , R.id.btn_1, R.id.btn_2,
             R.id.btn_3, R.id.btn_4, R.id.btn_5,
             R.id.btn_6, R.id.btn_7, R.id.btn_8, R.id.btn_9})
-    public void digitClicked(View view){
+    public void numPadClicked(View view){
 
         lastKey = DIGIT;
 
         switch (view.getId()){
 
+            case R.id.btn_decimal :
+                decimalClicked();
+                break;
+            case R.id.btn_0 :
+                zeroClicked();
+                break;
             case R.id.btn_1:
                 addDigit(1);
                 break;
@@ -162,36 +168,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    /**
-     * actions to be taken when the decimal point is clicked on
-     */
-    @OnClick(R.id.btn_decimal)
-    public void decimalClicked(){
-
-        String value = GetElementOnScreen();
-        if(!value.contains(".")){
-            value += ".";
-            result.setText(value);
-            lastKey = DIGIT;
-        }
-    }
-
-
-
-    /**
-     * Actions to be taken whenever
-     * the button 0 s clicked
-     */
-    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
-    @OnClick(R.id.btn_0)
-    public void zeroClicked(){
-        String value = GetElementOnScreen();
-        if(!value.isEmpty() && !value.equals("0")){
-            value += "0";
-            result.setText(value);
-            lastKey = DIGIT;
-        }
-    }
 
 
     /**
@@ -272,6 +248,32 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    /**
+     * actions to be taken when the decimal point is clicked on
+     */
+    public void decimalClicked(){
+
+        String value = GetElementOnScreen();
+        if(!value.contains(".")){
+            value += ".";
+            result.setText(value);
+        }
+    }
+
+
+
+    /**
+     * Actions to be taken whenever
+     * the button 0 s clicked
+     */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
+    public void zeroClicked(){
+        String value = GetElementOnScreen();
+        if(!value.isEmpty() && !value.equals("0")){
+            value += "0";
+            result.setText(value);
+        }
+    }
 
 
     /**
