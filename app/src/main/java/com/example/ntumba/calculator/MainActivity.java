@@ -168,43 +168,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-    /**
-     * adds two numbers and displays
-     * the corresponding result on screen
-     * making the result the new first number
-     * to be added in the futures or
-     * used in any other operation
-     */
-    private void addNumbers(){
-        final double resultValue = baseValue + secondValue;
-        result.setText(formatDouble(resultValue));
-        baseValue = resultValue;
-    }
-
-
-    /**
-     * substract two numbers and display the result on screen
-     */
-    private void substractNumber(){
-        final double resultValue = baseValue - secondValue;
-        result.setText(Formattor.formatDouble(resultValue));
-        baseValue = resultValue;
-    }
-
-
-    /**
-     * handles the multiplication
-     * mechanism
-     */
-    private void multiplyNumbers(){
-        final double resultValue = baseValue * secondValue;
-        result.setText(Formattor.formatDouble(resultValue));
-        baseValue = resultValue;
-    }
-
-
     /**
      * handles the division mechanism
      */
@@ -216,9 +179,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        result.setText(Formattor.formatDouble(resultValue));
-        baseValue = resultValue;
+        updateResult(resultValue);
     }
+
+
+    /**
+     * updates the result of some operation
+     * on screen
+     * operations are addition substraction multitplication
+     * and division
+     * @param resultV
+     */
+    public void updateResult(double resultV){
+        result.setText(Formattor.formatDouble(resultV));
+        baseValue = resultV;
+    }
+
+
 
 
     /**
@@ -235,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(lastKey == DIGIT){
             secondValue = getDisplayedNumberAsDouble();
-            handleEqual();
+            calculateResult();
             baseValue = getDisplayedNumberAsDouble();
         }
 
@@ -325,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
     public void onEqualClicked(){
 
         if(lastKey == EQUALS){
-            handleEqual();
+            calculateResult();
             return;
         }
 
@@ -337,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         secondValue = getDisplayedNumberAsDouble();
-        handleEqual();
+        calculateResult();
         lastKey = EQUALS;
     }
 
@@ -345,20 +322,20 @@ public class MainActivity extends AppCompatActivity {
     /**
      * handling the equal button
      */
-    private void handleEqual(){
+    private void calculateResult(){
 
         switch (lastOperation){
 
             case PLUS :
-                addNumbers();
+                updateResult(baseValue + secondValue);
                 break;
 
             case MINUS :
-                substractNumber();
+                updateResult(baseValue - secondValue);
                 break;
 
             case MULTIPLY :
-                multiplyNumbers();
+                updateResult(baseValue * secondValue);
                 break;
 
             case DIVIDE :
