@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int MINUS = 3;
     private static final int MULTIPLY = 4;
     private static final int DIVIDE = 5;
+    private static final int MODULO = 6;
+    private static final int POWER = 7;
 
 
 
@@ -184,6 +186,21 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
+     * finds the modulo of two numbers
+     */
+    private void modulo(){
+        double resultValue = 0;
+        if(secondValue != 0){
+            resultValue = baseValue % secondValue;
+        }
+
+
+        updateResult(resultValue);
+    }
+
+
+
+    /**
      * updates the result of some operation
      * on screen
      * operations are addition substraction multitplication
@@ -293,6 +310,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * click event for the modulo
+     * operator
+     */
+    @OnClick(R.id.btn_modulo)
+    public void onModuloClicked(){
+        handleOperation(MODULO);
+    }
+
+
+    /**
+     * click event for the power
+     * operator
+     */
+    @OnClick(R.id.btn_power)
+    public void onPowerClicked(){
+        handleOperation(POWER);
+    }
+
+
 
     /**
      * actions to to be performed
@@ -303,7 +340,6 @@ public class MainActivity extends AppCompatActivity {
 
         if(lastKey == EQUALS){
             calculateResult();
-            return;
         }
 
 
@@ -340,6 +376,14 @@ public class MainActivity extends AppCompatActivity {
 
             case DIVIDE :
                 divideNumber();
+                break;
+
+            case MODULO :
+                modulo();
+                break;
+
+            case POWER :
+                updateResult(Math.pow(baseValue , secondValue));
                 break;
         }
     }
