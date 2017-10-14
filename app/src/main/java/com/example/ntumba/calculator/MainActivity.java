@@ -197,6 +197,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * power function
+     */
+    public void powerNumber(){
+        double resultValue = Math.pow(baseValue , secondValue);
+        if(Double.isInfinite(resultValue) || Double.isNaN(resultValue)){
+            resultValue = 0;
+            updateResult(resultValue);
+        }
+    }
+
+
 
     /**
      * updates the result of some operation
@@ -443,7 +455,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case POWER :
-                updateResult(Math.pow(baseValue , secondValue));
+                powerNumber();
                 break;
         }
     }
