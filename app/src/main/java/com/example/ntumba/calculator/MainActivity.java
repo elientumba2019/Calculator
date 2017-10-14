@@ -1,6 +1,4 @@
 package com.example.ntumba.calculator;
-
-import android.annotation.SuppressLint;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -8,14 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-
-import java.text.DecimalFormat;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
-import static com.example.ntumba.calculator.Formattor.formatDouble;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
 
         //binding
         ButterKnife.bind(MainActivity.this);
+
+        //reset the screen
+        resetValues();
     }
 
 
@@ -56,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
      * @param number
      */
     private void addDigit(int number){
-        final String onScreen = GetElementOnScreen();
+        final String onScreen = getElementOnScreen();
         final String newVar = removeLeadingZero(onScreen + number);
         result.setText(newVar);
     }
@@ -68,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
      * @return
      */
     @NonNull
-    private String GetElementOnScreen() {
+    private String getElementOnScreen() {
         resetValueIfNeeded();
         return result.getText().toString().trim();
     }
@@ -228,9 +226,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         if(lastKey == DIGIT){
-            secondValue = getDisplayedNumberAsDouble();
-            calculateResult();
-            baseValue = getDisplayedNumberAsDouble();
+            getResult();
         }
 
 
@@ -247,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void decimalClicked(){
 
-        String value = GetElementOnScreen();
+        String value = getElementOnScreen();
         if(!value.contains(".")){
             value += ".";
             result.setText(value);
@@ -262,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void zeroClicked(){
-        String value = GetElementOnScreen();
+        String value = getElementOnScreen();
         if(!value.isEmpty() && !value.equals("0")){
             value += "0";
             result.setText(value);
@@ -331,6 +327,65 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+    /**
+     * event handler for the root
+     * button when clicked
+     */
+    @OnClick(R.id.btn_root)
+    public void onRootClicked(){
+        getResult();
+        lastOperation = EQUALS;
+        updateResult(Math.sqrt(baseValue));
+    }
+
+
+    /**
+     * onClick event for the clear
+     * button when clicked
+     * it clears on digit at a time
+     */
+    @OnClick(R.id.btn_clear)
+    public void onClearClicked(){
+
+        final String oldValue = getElementOnScreen();
+        String newValue;
+        final int len = oldValue.length();
+        int minLength = 1;
+
+        if(oldValue.contains("-")){
+            minLength++;
+        }
+
+        if(len > minLength){
+            newValue = oldValue.substring(0 , len -1);
+        }
+        else{
+            newValue = "0";
+        }
+
+
+        result.setText(newValue);
+        baseValue = Double.parseDouble(newValue);
+
+    }
+
+
+    /**
+     * clears everything on screen
+     * @return
+     */
+    @OnLongClick(R.id.btn_clear)
+    public boolean clearLongClicked(){
+        resetValues();
+        return  true;
+    }
+
+
+
+
+
+
     /**
      * actions to to be performed
      * when the equal key is clicked
@@ -353,6 +408,11 @@ public class MainActivity extends AppCompatActivity {
         calculateResult();
         lastKey = EQUALS;
     }
+
+
+
+
+
 
 
     /**
@@ -386,5 +446,29 @@ public class MainActivity extends AppCompatActivity {
                 updateResult(Math.pow(baseValue , secondValue));
                 break;
         }
+    }
+
+
+    /**
+     * gets the result in the base value
+     */
+    public void getResult(){
+        secondValue = getDisplayedNumberAsDouble();
+        calculateResult();
+        baseValue = getDisplayedNumberAsDouble();
+    }
+
+
+
+    /**
+     * resets all the values on the screen
+     */
+    private void resetValues(){
+        baseValue = 0;
+        secondValue = 0;
+        resetValue = false;
+        lastKey = 0;
+        lastOperation = 0;
+        result.setText("0");
     }
 }
