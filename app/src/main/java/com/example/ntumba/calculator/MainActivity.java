@@ -22,14 +22,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     //state variable
-    private static final int DIGIT = 0;
-    private static final int EQUALS = 1;
-    private static final int PLUS = 2;
-    private static final int MINUS = 3;
-    private static final int MULTIPLY = 4;
-    private static final int DIVIDE = 5;
-    private static final int MODULO = 6;
-    private static final int POWER = 7;
+    public static final int DIGIT = 0;
+    public static final int EQUALS = 1;
+    public static final int PLUS = 2;
+    public static final int MINUS = 3;
+    public static final int MULTIPLY = 4;
+    public static final int DIVIDE = 5;
+    public static final int MODULO = 6;
+    public static final int POWER = 7;
 
 
 
@@ -53,10 +53,10 @@ public class MainActivity extends AppCompatActivity {
      * adds a new digit on screen
      * @param number
      */
-    private void addDigit(int number){
+    public void addDigit(int number){
         final String onScreen = getElementOnScreen();
-        final String newVar = removeLeadingZero(onScreen + number);
-        result.setText(newVar);
+        final String newValue = removeLeadingZero(onScreen + number);
+        setResult(newValue);
     }
 
 
@@ -66,8 +66,7 @@ public class MainActivity extends AppCompatActivity {
      * @return
      */
     @NonNull
-    private String getElementOnScreen() {
-        resetValueIfNeeded();
+    public String getElementOnScreen() {
         return result.getText().toString().trim();
     }
 
@@ -79,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void resetValueIfNeeded(){
         if(resetValue){
-            result.setText("0");
+            setResult("0");
         }
 
         resetValue = false;
@@ -91,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
      * using a double representation
      * @return
      */
-    private double getDisplayedNumberAsDouble(){
-        return Double.parseDouble(result.getText().toString().trim());
+    public double getDisplayedNumberAsDouble(){
+        return Double.parseDouble(getElementOnScreen());
     }
 
 
@@ -119,12 +118,25 @@ public class MainActivity extends AppCompatActivity {
      * for buttons (digits
      * @param view
      */
-    @OnClick({R.id.btn_decimal ,R.id.btn_0 , R.id.btn_1, R.id.btn_2,
-            R.id.btn_3, R.id.btn_4, R.id.btn_5,
-            R.id.btn_6, R.id.btn_7, R.id.btn_8, R.id.btn_9})
+    @OnClick({R.id.btn_decimal,
+            R.id.btn_0,
+            R.id.btn_1,
+            R.id.btn_2,
+            R.id.btn_3,
+            R.id.btn_4,
+            R.id.btn_5,
+            R.id.btn_6,
+            R.id.btn_7,
+            R.id.btn_8,
+            R.id.btn_9})
     public void numPadClicked(View view){
 
+        if(lastKey == EQUALS){
+            lastOperation = EQUALS;
+        }
+
         lastKey = DIGIT;
+        resetValueIfNeeded();
 
         switch (view.getId()){
 
@@ -218,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
      * @param resultV
      */
     public void updateResult(double resultV){
-        result.setText(Formattor.formatDouble(resultV));
+        setResult(Formattor.formatDouble(resultV));
         baseValue = resultV;
     }
 
@@ -229,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
      * handles the operations
      * @param operation
      */
-    private void handleOperation(int operation){
+    public void handleOperation(int operation){
 
         if(lastKey == operation){
             return;
@@ -258,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
         String value = getElementOnScreen();
         if(!value.contains(".")){
             value += ".";
-            result.setText(value);
+            setResult(value);
         }
     }
 
@@ -273,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
         String value = getElementOnScreen();
         if(!value.isEmpty() && !value.equals("0")){
             value += "0";
-            result.setText(value);
+            setResult(value);
         }
     }
 
@@ -377,7 +389,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        result.setText(newValue);
+       setResult(newValue);
         baseValue = Double.parseDouble(newValue);
 
     }
@@ -430,7 +442,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * handling the equal button
      */
-    private void calculateResult(){
+    public void calculateResult(){
 
         switch (lastOperation){
 
@@ -481,6 +493,17 @@ public class MainActivity extends AppCompatActivity {
         resetValue = false;
         lastKey = 0;
         lastOperation = 0;
-        result.setText("0");
+        setResult("0");
+    }
+
+
+    /**
+     * sets the result
+     * on screen
+     * the result could be anything
+     * @param value
+     */
+    public void setResult(String value){
+        result.setText(value);
     }
 }

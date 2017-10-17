@@ -1,5 +1,8 @@
 package com.example.ntumba.calculator;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
 public class Formattor {
 
 
@@ -15,8 +18,15 @@ public class Formattor {
         }
 
         else{
-            final DecimalFormat format = new DecimalFormat("0.0#############");
-            return format.format(d);
+            final DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+            symbols.setDecimalSeparator('.');
+
+            final DecimalFormat formatter = new DecimalFormat();
+            formatter.setMaximumIntegerDigits(12);
+            formatter.setMaximumFractionDigits(12);
+            formatter.setDecimalFormatSymbols(symbols);
+            formatter.setGroupingUsed(false);
+            return  formatter.format(d);
         }
     }
 }
