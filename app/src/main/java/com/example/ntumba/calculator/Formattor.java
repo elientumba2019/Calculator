@@ -12,7 +12,7 @@ public class Formattor {
      * @param d
      * @return
      */
-    public static String formatDouble(double d){
+    public static String doubleToString(double d){
         if(d == (long)d){
             return String.format("%d" , (long)d);
         }
